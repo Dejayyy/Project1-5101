@@ -78,7 +78,7 @@ namespace Project1_5101
         }
 
         public (string capital, double latitude, double longitude) GetCapital(string province)
-        {
+    {
             // TODO: Implement logic to get province capital with Lat/Long
             throw new NotImplementedException();
         }
