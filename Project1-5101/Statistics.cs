@@ -10,7 +10,7 @@ namespace Project1_5101
 {
     public class Statistics
     {
-        private Dictionary<string CityInfo> CityCatalogue { get; set; }
+        private Dictionary<string, CityInfo> CityCatalogue { get; set; }
 
         //You may get the value of the CityCatalogue here in thisconstructor by calling the DataModeler.Parse method.
         public Statistics(string fileName, string fileType)
