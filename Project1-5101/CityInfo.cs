@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Project1_5101
 {
     public class CityInfo
     {
-        // Properties
+        //Properties
         public int CityID;
         public string CityName;
         public string CityAscii;
@@ -17,7 +13,21 @@ namespace Project1_5101
         public double Latitude;
         public double Longitude;
 
-        // Methods
+        public CityInfo() { }
+
+        //Parameterized Constructor
+        public CityInfo(int CityID, string CityName, string CityAscii, int Population, string Province, double Latitude, double Longitude)
+        {
+            this.CityID = CityID;
+            this.CityName = CityName;
+            this.CityAscii = CityAscii;
+            this.Population = Population;
+            this.Province = Province;
+            this.Latitude = Latitude;
+            this.Longitude = Longitude;
+        }
+
+        //Methods
         public string GetProvince()
         {
             return Province;
@@ -31,18 +41,6 @@ namespace Project1_5101
         public (double, double) GetLocation()
         {
             return (Latitude, Longitude);
-        }
-
-        // Constructors
-        public CityInfo(int CityID, string CityName, string CityAscii, int Population, string Province, double Latitude, double Longitude)
-        {
-            this.CityID = CityID;
-            this.CityName = CityName;
-            this.CityAscii = CityAscii;
-            this.Population = Population;
-            this.Province = Province;
-            this.Latitude = Latitude;
-            this.Longitude = Longitude;
         }
     }
 }
