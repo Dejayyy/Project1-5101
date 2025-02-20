@@ -10,7 +10,7 @@ namespace Project1_5101
 {
     public class Statistics
     {
-        private Dictionary<string, CityInfo> CityCatalogue { get; set; }
+        private Dictionary<string, CityInfo>? CityCatalogue { get; set; }
 
         //Get the value of the CityCatalogue here in thisconstructor by calling the DataModeler.Parse method.
         public Statistics(string fileName, string fileType)
@@ -21,32 +21,51 @@ namespace Project1_5101
         public CityInfo DisplayCityInformation(string cityName)
         {
             //Handle cases where multiple cities share the same name
-            var matchingCities = CityCatalogue.Values.Where(city => city.CityName.Equals(cityName, StringComparison.OrdinalIgnoreCase)).ToList();
+            var matchingCities = CityCatalogue?.Values.Where(city => city.CityName.Equals(cityName, StringComparison.OrdinalIgnoreCase)).ToList();
 
-            if (matchingCities.Count == 1)
+            if (!matchingCities.Any())
             {
-                return matchingCities.First();
+                throw new Exception($"City '{cityName}' not found.");
             }
-            else if (matchingCities.Count > 1)
+
+            if (matchingCities.Count() > 1)
             {
-                Console.WriteLine($"Multiple cities found for '{cityName}', returning the first match.");
-                return matchingCities.First();
+                Console.WriteLine($"\nMultiple cities found with the name {cityName}: ");
+                for (int i=0; i <matchingCities.Count(); i++)
+                {
+                    Console.WriteLine($"{i+1}) {matchingCities[i].CityName}, {matchingCities[i].Province}");
+                }
+                Console.WriteLine("\nPlease select a city (number): ");
+                if (int.TryParse(Console.ReadLine(), out int selection) && selection > 0 && selection <= matchingCities.Count) { 
+                    return matchingCities[selection-1];
+                }
+                throw new Exception("Invalid selection.");
             }
-            throw new Exception($"City '{cityName}' not found.");
+            return matchingCities.First();
         }
         public CityInfo DisplayLargestPopulationCity(string province)
         {
-            return CityCatalogue.Values
-               .Where(city => city.Province.Equals(province, StringComparison.OrdinalIgnoreCase))
-               .OrderByDescending(city => city.Population)
-               .FirstOrDefault();
+            var city = CityCatalogue.Values
+               .Where(c => c.Province.Equals(province, StringComparison.OrdinalIgnoreCase))
+               .MaxBy(c => c.Population);
+
+            if (city == null)
+            {
+                throw new Exception($"No cities found in province {province}. ");
+            }
+            return city;
         }
         public CityInfo DisplaySmallestPopulationCity(string province)
         {
-            return CityCatalogue.Values
-               .Where(city => city.Province.Equals(province, StringComparison.OrdinalIgnoreCase))
-               .OrderBy(city => city.Population)
-               .FirstOrDefault();
+            var city = CityCatalogue.Values
+               .Where(c => c.Province.Equals(province, StringComparison.OrdinalIgnoreCase))
+               .MinBy(c => c.Population);
+
+            if (city == null)
+            {
+                throw new Exception($"No cities found in province {province}. ");
+            }
+            return city;
         }
 
         public (CityInfo largerCity, int city1Population, int city2Population) CompareCitiesPopluation(string city1, string city2)
@@ -123,16 +142,28 @@ namespace Project1_5101
         //Province Methods
         public int DisplayProvincePopulation(string provinceName)
         {
-            return CityCatalogue.Values
+            var population = CityCatalogue.Values
                .Where(city => city.Province.Equals(provinceName, StringComparison.OrdinalIgnoreCase))
                .Sum(city => city.Population);
+
+            if(population == 0)
+            {
+                throw new Exception($"No cities found in province {provinceName}"       );
+            }
+            return population;
         }
 
         public List<CityInfo> DisplayProvinceCities(string provinceName)
         {
-            return CityCatalogue.Values
+            var cities = CityCatalogue.Values
                 .Where(city => city.Province.Equals(provinceName, StringComparison.OrdinalIgnoreCase))
                 .ToList();
+
+            if (!cities.Any())
+            {
+                throw new Exception($"No cities found in province");
+            }
+            return cities;
         }
 
         public List<(string province, int population)> RankProvincesByPopulation()

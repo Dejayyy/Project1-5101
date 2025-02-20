@@ -1,22 +1,34 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 
 namespace Project1_5101
 {
     public class CityInfo
     {
-        //Properties
-        public int CityID;
-        public string CityName;
-        public string CityAscii;
-        public int Population;
-        public string Province;
-        public double Latitude;
-        public double Longitude;
+        
+        [JsonProperty("id")]
+        public int CityID { get; set; }
+        [JsonProperty("city")]
+        public string CityName { get; set; }
+        [JsonProperty("city_ascii")]
+        public string CityAscii { get; set; }
+        [JsonProperty("population")]
+        public int Population { get; set; }
+        [JsonProperty("admin_name")]
+        public string Province { get; set; }
+        [JsonProperty("lat")]
+        public double Latitude { get; set; }
+        [JsonProperty("lng")]
+        public double Longitude { get; set; }
+        [JsonProperty("country")]
+        public string Country { get; set; }
+        [JsonProperty("capital")]
+        public string Capital { get; set; }
 
         public CityInfo() { }
 
         //Parameterized Constructor
-        public CityInfo(int CityID, string CityName, string CityAscii, int Population, string Province, double Latitude, double Longitude)
+        public CityInfo(int CityID, string CityName, string CityAscii, int Population, string Province, double Latitude, double Longitude, string country, string capital)
         {
             this.CityID = CityID;
             this.CityName = CityName;
@@ -25,6 +37,8 @@ namespace Project1_5101
             this.Province = Province;
             this.Latitude = Latitude;
             this.Longitude = Longitude;
+            this.Country = country;
+            this.Capital = capital;
         }
 
         //Methods
