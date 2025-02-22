@@ -91,14 +91,16 @@ class Program
                 _ => throw new ArgumentException("Invalid file selected.")
             };
 
-            if (!File.Exists(fileName))
+            string dataPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\Data", fileName);
+            dataPath = Path.GetFullPath(dataPath);
+
+            if (!File.Exists(dataPath))
             {
-                throw new FileNotFoundException($"Could not find the file: {fileName}");
-                
+                throw new FileNotFoundException($"Could not find the file: {dataPath}");
             }
 
-            Console.WriteLine($"\nYou selected {Path.GetFileName(fileName)}. Processing...");
-            return new Statistics(fileName, fileType);
+            Console.WriteLine($"\nYou selected {Path.GetFileName(dataPath)}. Processing...");
+            return new Statistics(dataPath, fileType);
         }
         catch(Exception ex) 
         {
@@ -258,40 +260,3 @@ class Program
         Console.WriteLine($"\nThe distance between {city1} and {city2} is {result} km.");
     }
 }
-
-
-//Console.WriteLine("\n------------------------------");
-//Console.WriteLine(" Program Functionality ");
-//Console.WriteLine("------------------------------");
-//Console.WriteLine("- To exit program, enter 'exit' at any prompt.");
-//Console.WriteLine("- To restart program, enter 'restart' at any prompt.");
-//Console.WriteLine("- You will be presented with a numbered list of options. Please enter a value.");
-//Console.WriteLine("Fetching list of available file names to be processed and queried...");
-//Console.WriteLine("\n1) canadiancities-CSV");
-//Console.WriteLine("2) canadiancities-JSON");
-//Console.WriteLine("3) canadiancities-XML");
-//Console.Write("\nSelect an option from the list above (e.g., 1, 2, 3): ");
-
-//string input = Console.ReadLine().ToLower();
-//if (input == "exit") break;
-//if (input == "restart") break;
-
-//string fileType = input switch
-//{
-//    "1" => "csv",
-//    "2" => "json",
-//    "3" => "xml",
-//    _ => throw new ArgumentException("Invalid selection, please restart.")
-//};
-
-//string fileName = fileType switch
-//{
-//    "csv" => "canadiancities-CSV",
-//    "json" => "canadiancities-JSON",
-//    "xml" => "canadiancities-XML",
-//    _ => throw new ArgumentException("Invalid file selected.")
-//};
-
-//Console.WriteLine($"\nYou selected {fileName}. Processing");
-//            //Statistics stats = new Statistics(fileName, fileType);
-//        }

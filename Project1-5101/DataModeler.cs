@@ -75,21 +75,41 @@ namespace Project1_5101
         {
             cityData = new Dictionary<string, CityInfo>();
             string jsonText = File.ReadAllText(fileName);
-            List<CityInfo>? cities = JsonConvert.DeserializeObject<List<CityInfo>>(jsonText);
+            List<Dictionary<string, string>>? cities = JsonConvert.DeserializeObject<List<Dictionary<string, string>>>(jsonText);
 
             if (cities == null)
+                throw new Exception("Failed to deserialize JSON data.");
+
+            foreach (var cityDataEntry in cities)
             {
-                throw new Exception("Failed to deserialize JSON data");
+                try
+                {
+                    var city = new CityInfo
+                    {
+                        CityID = int.TryParse(cityDataEntry["id"], out int id) ? id : 0,
+                        CityName = cityDataEntry["city"],
+                        CityAscii = cityDataEntry["city_ascii"],
+                        Population = int.TryParse(cityDataEntry["population"], out int population) ? population : 0,
+                        Province = cityDataEntry["admin_name"],
+                        Latitude = double.TryParse(cityDataEntry["lat"], out double lat) ? lat : 0.0,
+                        Longitude = double.TryParse(cityDataEntry["lng"], out double lng) ? lng : 0.0,
+                        Country = cityDataEntry["country"],
+                        Capital = cityDataEntry["capital"]
+                    };
+
+                    if (!string.IsNullOrWhiteSpace(city.CityName))
+                        cityData[city.CityName] = city;
+                    
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error parsing city data: {ex.Message}");
+                }
             }
 
-            foreach (var city in cities!)
-            {
-                if (!cityData.ContainsKey(city.CityName))
-                    cityData.Add(city.CityName, city);
-            }
-
-            
+            Console.WriteLine($"JSON Parsing Complete. {cityData.Count} cities loaded.");
         }
+
 
         //Parsing CSV and storing into Dictionary
         public void ParseCSV(string fileName)
@@ -120,13 +140,7 @@ namespace Project1_5101
                         cityData[city.CityName] = city; 
                     }
                 }
-                //var records = csv.GetRecords<CityInfo>();
-
-                //foreach (var city in records)
-                //{
-                //    if (!cityData.ContainsKey(city.CityName))
-                //        cityData.Add(city.CityName, city);
-                //}
+               
             }
 
             
