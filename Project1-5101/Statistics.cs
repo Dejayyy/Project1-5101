@@ -6,6 +6,10 @@ using System.Runtime;
 using System.Text;
 using System.Threading.Tasks;
 
+/*
+ * Authors: Ayden Nicholson, William Mouhtouris, Logan McCallum 
+ */
+
 namespace Project1_5101
 {
     public class Statistics
@@ -18,15 +22,15 @@ namespace Project1_5101
             DataModeler dataModeler = new DataModeler();
             CityCatalogue = dataModeler.ParseFile(fileName, fileType);
         }
+
         public CityInfo DisplayCityInformation(string cityName)
         {
             //Handle cases where multiple cities share the same name
             var matchingCities = CityCatalogue?.Values.Where(city => city.CityName.Equals(cityName, StringComparison.OrdinalIgnoreCase)).ToList();
 
             if (!matchingCities.Any())
-            {
                 throw new Exception($"City '{cityName}' not found.");
-            }
+            
 
             if (matchingCities.Count() > 1)
             {
@@ -36,23 +40,23 @@ namespace Project1_5101
                     Console.WriteLine($"{i+1}) {matchingCities[i].CityName}, {matchingCities[i].Province}");
                 }
                 Console.WriteLine("\nPlease select a city (number): ");
-                if (int.TryParse(Console.ReadLine(), out int selection) && selection > 0 && selection <= matchingCities.Count) { 
+                if (int.TryParse(Console.ReadLine(), out int selection) && selection > 0 && selection <= matchingCities.Count) 
                     return matchingCities[selection-1];
-                }
+                
                 throw new Exception("Invalid selection.");
             }
             return matchingCities.First();
         }
+
         public CityInfo DisplayLargestPopulationCity(string province)
         {
             var city = CityCatalogue.Values
                .Where(c => c.Province.Equals(province, StringComparison.OrdinalIgnoreCase))
                .MaxBy(c => c.Population);
 
-            if (city == null)
-            {
+            if (city == null)          
                 throw new Exception($"No cities found in province {province}. ");
-            }
+            
             return city;
         }
         public CityInfo DisplaySmallestPopulationCity(string province)
@@ -62,9 +66,8 @@ namespace Project1_5101
                .MinBy(c => c.Population);
 
             if (city == null)
-            {
                 throw new Exception($"No cities found in province {province}. ");
-            }
+            
             return city;
         }
 
@@ -114,9 +117,8 @@ namespace Project1_5101
             var secondCity = DisplayCityInformation(city2);
 
             if (firstCity == null || secondCity == null)
-            {
                 throw new Exception("One or both cities were not found.");
-            }
+            
 
             double R = 6371; //Radius of the Earth in kilometers
 
@@ -147,9 +149,8 @@ namespace Project1_5101
                .Sum(city => city.Population);
 
             if(population == 0)
-            {
                 throw new Exception($"No cities found in province {provinceName}"       );
-            }
+            
             return population;
         }
 
@@ -160,9 +161,8 @@ namespace Project1_5101
                 .ToList();
 
             if (!cities.Any())
-            {
                 throw new Exception($"No cities found in province");
-            }
+            
             return cities;
         }
 

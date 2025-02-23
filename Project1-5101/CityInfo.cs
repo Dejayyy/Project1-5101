@@ -1,6 +1,10 @@
 ﻿using Newtonsoft.Json;
 using System;
 
+/*
+ * Authors: Ayden Nicholson, William Mouhtouris, Logan McCallum 
+ */
+
 namespace Project1_5101
 {
     public class CityInfo

@@ -1,4 +1,7 @@
 ﻿using Project1_5101;
+/*
+ * Authors: Ayden Nicholson, William Mouhtouris, Logan McCallum 
+ */
 
 class Program
 {

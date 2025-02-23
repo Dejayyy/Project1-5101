@@ -6,6 +6,10 @@ using Newtonsoft.Json;
 using CsvHelper;
 using System.Globalization;
 
+/*
+ * Authors: Ayden Nicholson, William Mouhtouris, Logan McCallum 
+ */
+
 namespace Project1_5101
 {
     public class DataModeler
@@ -33,7 +37,7 @@ namespace Project1_5101
                     try
                     {
 
-                        // Skip entries with missing city name
+                        //Skip entries with missing city name
                         var cityNameNode = node.SelectSingleNode("city");
                         if (cityNameNode == null || string.IsNullOrWhiteSpace(cityNameNode.InnerText))
                         {
