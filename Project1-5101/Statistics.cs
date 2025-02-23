@@ -48,6 +48,7 @@ namespace Project1_5101
             return matchingCities.First();
         }
 
+        //Takes the population of both cities and compares it and outputs the largest
         public CityInfo DisplayLargestPopulationCity(string province)
         {
             var city = CityCatalogue.Values
@@ -59,6 +60,8 @@ namespace Project1_5101
             
             return city;
         }
+
+        //Takes the population of both cities and compares it and outputs the smallest
         public CityInfo DisplaySmallestPopulationCity(string province)
         {
             var city = CityCatalogue.Values
@@ -71,6 +74,7 @@ namespace Project1_5101
             return city;
         }
 
+        //Compares cities populations
         public (CityInfo largerCity, int city1Population, int city2Population) CompareCitiesPopluation(string city1, string city2)
         {
             var firstCity = DisplayCityInformation(city1);
@@ -81,6 +85,7 @@ namespace Project1_5101
                 : (secondCity, firstCity.Population, secondCity.Population);
         }
 
+        //Shows the city on the map
         public void ShowCityOnMap(string cityName, string province)
         {
             var city = CityCatalogue.Values
@@ -111,6 +116,7 @@ namespace Project1_5101
             }
         }
 
+        //Calculates the distance between cities
         public double CalculateDistanceBetweenCities(string city1, string city2)
         {
             var firstCity = DisplayCityInformation(city1);
@@ -142,6 +148,8 @@ namespace Project1_5101
         }
 
         //Province Methods
+
+        //Displays Province populations
         public int DisplayProvincePopulation(string provinceName)
         {
             var population = CityCatalogue.Values
@@ -154,6 +162,7 @@ namespace Project1_5101
             return population;
         }
 
+        //Displays the cities in the province
         public List<CityInfo> DisplayProvinceCities(string provinceName)
         {
             var cities = CityCatalogue.Values
@@ -166,6 +175,7 @@ namespace Project1_5101
             return cities;
         }
 
+        //Ranked highest to lowest in population
         public List<(string province, int population)> RankProvincesByPopulation()
         {
             return CityCatalogue.Values
@@ -175,6 +185,7 @@ namespace Project1_5101
          .ToList();
         }
 
+        //Ranks the provinces by cities
         public List<(string province, int cityCount)> RankProvincesByCities()
         {
             return CityCatalogue.Values
@@ -184,8 +195,9 @@ namespace Project1_5101
                 .ToList();
         }
 
+        //Gets the capitial of the province
         public (string capital, double latitude, double longitude) GetCapital(string province)
-    {
+        {
             var capitalCity = CityCatalogue.Values
                 .Where(city => city.Province.Equals(province, StringComparison.OrdinalIgnoreCase))
                 .FirstOrDefault();
